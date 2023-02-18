@@ -2,8 +2,7 @@ package geico.tdd.objects;
 
 import static geico.tdd.common.CommonActions.*;
 
-import org.apache.commons.compress.archivers.zip.X000A_NTFS;
-import org.openqa.selenium.Keys;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -14,7 +13,7 @@ import org.openqa.selenium.support.PageFactory;
 public class AboutYouPage{
 	
 	
-	
+	WebDriver driver;
 
 	public AboutYouPage(WebDriver driver) {
 		PageFactory.initElements(driver, this);
@@ -26,9 +25,9 @@ public class AboutYouPage{
 	WebElement dateOfBirthInput;
 	@FindBy(xpath = "//button[@type='submit']")
 	WebElement nextBtn1;
-	@FindBy(xpath = "/html[1]/body[1]/div[1]/div[2]/main[1]/div[2]/section[1]/div[1]/div[1]/div[1]/form[1]/div[1]/div[2]/input[1]")
+	@FindBy(xpath = "(//input[@size='21'])[1]")
 	WebElement firstNameInput;
-	@FindBy(xpath = "/html[1]/body[1]/div[1]/div[2]/main[1]/div[2]/section[1]/div[1]/div[1]/div[1]/form[1]/div[1]/div[3]/input[1]")
+	@FindBy(xpath = "(//input[@size='21'])[2]")
 	WebElement lastNmaeInput;
 	@FindBy(xpath = "(//button[@type='submit'])[1]")
 	WebElement nextBtn2;
@@ -41,27 +40,28 @@ public class AboutYouPage{
 	
 	
 	
+	
 
 	public void ValidateAboutYouPageTitle(String expectedTitle) {
 		validate(aboutYouPageTitle, expectedTitle);
 	}
 	
-	public void insertDateOfBirthField() {
-		insert(dateOfBirthInput, "10/10/1990");
+	public void insertDateOfBirthField( String dateOfBirth) {
+		insert(dateOfBirthInput, dateOfBirth);
 	}
 
 	public void clickNextBtn1() {
 		click(nextBtn1);
 	}
 
-	public void insertFirstNameField( ) {
+	public void insertFirstNameField(String firstName ) {
 		
-		insert(firstNameInput, "JON");
+		insert(firstNameInput, firstName);
 
 	}
 	
-	public void insertLastNameField() {
-		insert(lastNmaeInput, "son");
+	public void insertLastNameField(String lastName) {
+		insert(lastNmaeInput, lastName);
 	}
 	
 
@@ -69,19 +69,21 @@ public class AboutYouPage{
 		click(nextBtn2);
 	}
 	
-	public void insertAddressField() {
+	public void insertAddressField(String address) {
 		
-		insert(addressInput, "3105 Decatur Ave");
-		insert_Enter(aboutYouPageTitle);
+		insert(addressInput, address);
+		enter(aboutYouPageTitle);
 	}
 	
 	
-	public void insertAptField() {
-		insert(aptInput, "34B");
+	public void insertAptField(String apt) {
+		insert(aptInput, apt);
 	}
 	
 	public void clickNextBtn3() {
 		click(nextBtn3);
 	}
+	 
+	
 
 }

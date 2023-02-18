@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Suite">
+	<listeners>
+		<listener class-name="geico.tdd.retry.AnnotationTransform"></listener>
+	</listeners>
+	<test thread-count="5" name="Regression">
+		<parameter name="browser" value="firefox"></parameter>
+		<parameter name="zipCode" value="10467"></parameter>
+		<parameter name="expectedAbtPageTitle" value="About You"></parameter>
+		<parameter name="dateOfBirth" value="10/10/1990"></parameter>
+		<parameter name="firstName" value="Jon"></parameter>
+		<parameter name="lastName" value="Son"></parameter>
+		<parameter name="address" value="3106 Decatur Ave"></parameter>
+		<parameter name="aptNo" value="32B"></parameter>
+		<parameter name="expectedVhdPageTitle" value="Vehicle Details"></parameter>
+		<parameter name="vhcYear" value="2023"></parameter>
+		<parameter name="vhcMake" value="Subaru"></parameter>
+		<parameter name="vhcModel" value="Ascent Touring"></parameter>
+		<parameter name="zipCode2" value="10467"></parameter>
+		<parameter name="getAHQPageTitle" value="Let's Get Started!"></parameter>
+		<parameter name="location" value="3106 Decatur Ave"></parameter>
+		<parameter name="unitNumber" value="48A"></parameter>
+		<classes>
+			<class name="geico.tdd.test.auto.AutoQuoteTest" />
+			<class name="geico.tdd.test.home.HomeQuoteTest" />
+		</classes>
+	</test> <!-- Test -->
+</suite> <!-- Suite -->

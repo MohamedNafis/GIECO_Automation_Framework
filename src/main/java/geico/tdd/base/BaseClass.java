@@ -7,42 +7,39 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeSuite;
-
+import org.testng.annotations.Parameters;
+import com.aventstack.extentreports.Status;
 import geico.tdd.objects.AboutYouPage;
+import geico.tdd.objects.GetAHomeQuote;
 import geico.tdd.objects.LandingPage;
 import geico.tdd.objects.VehicleDetailsPage;
 import geico.tdd.utils.Constant;
 import geico.tdd.utils.ReadProperties;
 import io.github.bonigarcia.wdm.WebDriverManager;
-
 import static geico.tdd.utils.IConstant.*;
-
+import java.lang.reflect.Method;
 import java.time.Duration;
-
 import static geico.tdd.utils.Constant.*;
 
-public class BaseClass {
+public class BaseClass extends ExtentListener {
 
 	protected WebDriver driver;
 	protected LandingPage landingPage;
 	protected AboutYouPage aboutYouPage;
 	protected VehicleDetailsPage vehicleDetailsPage;
+	protected GetAHomeQuote getAHomeQuote;
 	protected WebDriverWait wait;
 	protected JavascriptExecutor js;
-	ReadProperties envVar;
+	ReadProperties envVar = new ReadProperties();
 
-	@BeforeSuite
-	public void setUpSuite() {
-		envVar = new ReadProperties();
-	}
-
+	@Parameters("browser")
 	@BeforeMethod
-	public void setUpDriver() {
+	public void setUpDriver(String browserName) {
 		// Enum example
-		String browserName = envVar.getProperty(getString(browser));
+		// String browserName = envVar.getProperty(getString(browser));
 		// String browserName = envVar.getProperty(browser.name());
 
 		// IConstant interface example
@@ -50,15 +47,15 @@ public class BaseClass {
 		String url = envVar.getProperty(URL);
 		long pageLoadWait = envVar.getNumProperty(PAGELOAD_WAIT);
 		long implicitWait = envVar.getNumProperty(IMPLECIT_WAIT);
-		long explicitWait = envVar.getNumProperty(EXPLICIT_WAIT);
+		// long explicitWait = envVar.getNumProperty(EXPLICIT_WAIT);
 		initDriver(browserName);
 		initClasses(driver);
-		
+
 		driver.get(url);
 		driver.manage().window().maximize();
 		driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(pageLoadWait));
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(implicitWait));
-		wait = new WebDriverWait(driver, Duration.ofSeconds(explicitWait));
+		// wait = new WebDriverWait(driver, Duration.ofSeconds(explicitWait));
 	}
 
 	private void initClasses(WebDriver driver) {
@@ -66,15 +63,16 @@ public class BaseClass {
 		landingPage = new LandingPage(driver);
 		aboutYouPage = new AboutYouPage(driver);
 		vehicleDetailsPage = new VehicleDetailsPage(driver);
+		getAHomeQuote = new GetAHomeQuote(driver);
 
 	}
 
 	private void initDriver(String driverName) {
 		switch (driverName) {
-		//case CHROME:
-			//WebDriverManager.chromedriver().setup();
-		//	driver = new ChromeDriver();
-		//	break;
+		case CHROME:
+			WebDriverManager.chromedriver().setup();
+			driver = new ChromeDriver();
+			break;
 		case FIREFOX:
 			WebDriverManager.firefoxdriver().setup();
 			driver = new FirefoxDriver();
@@ -99,6 +97,19 @@ public class BaseClass {
 		driver.quit();
 	}
 
+	@AfterMethod
+	public void getResult(ITestResult result, Method method) {
+		if (result.getStatus() == ITestResult.SUCCESS) {
+			test.log(Status.PASS, PASSED);
+		} else if (result.getStatus() == ITestResult.FAILURE) {
+			test.log(Status.FAIL, FAILED);
+			test.addScreenCaptureFromPath(captureScreenShot(driver, method.getName()));
+		} else if (result.getStatus() == ITestResult.SKIP) {
+			test.log(Status.SKIP, SKIPPED);
+		}
+	}
+
+	@SuppressWarnings("unused")
 	private String getString(Constant constant) {
 		return constant.name();
 	}

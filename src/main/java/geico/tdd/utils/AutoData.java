@@ -1,7 +1,7 @@
 package geico.tdd.utils;
 
 public class AutoData {
-
+	
 	String zipCode;
 	String expectedAbtPageTitle;
 	String dateOfBirth;

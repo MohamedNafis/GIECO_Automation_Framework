@@ -24,7 +24,6 @@ import java.lang.reflect.Method;
 import java.time.Duration;
 import static geico.tdd.utils.Constant.*;
 
-
 public class BaseClass extends ExtentListener {
 
 	protected WebDriver driver;

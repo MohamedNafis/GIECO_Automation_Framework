@@ -2,7 +2,6 @@ package geico.tdd.test.auto;
 
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
-
 import geico.tdd.base.BaseClass;
 import geico.tdd.utils.AutoData;
 

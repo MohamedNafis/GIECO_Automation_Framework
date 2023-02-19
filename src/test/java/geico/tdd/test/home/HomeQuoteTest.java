@@ -3,7 +3,6 @@ package geico.tdd.test.home;
 import org.testng.annotations.Test;
 import org.testng.Assert;
 import org.testng.annotations.Parameters;
-
 import geico.tdd.base.BaseClass;
 import geico.tdd.reporting.Logs;
 import geico.tdd.utils.HomeData;

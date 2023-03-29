@@ -6,6 +6,7 @@
 	</listeners>
 	<test thread-count="5" name="Regression">
 		<parameter name="browser" value="firefox"></parameter>
+		<parameter name="env" value="prod"></parameter>
 		<parameter name="zipCode" value="10467"></parameter>
 		<parameter name="expectedAbtPageTitle" value="About You"></parameter>
 		<parameter name="dateOfBirth" value="10/10/1990"></parameter>
